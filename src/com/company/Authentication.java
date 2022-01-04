@@ -34,7 +34,7 @@ public class Authentication {
     }
 
     public static void inputVerification(String login, String password, String confirmPassword) throws WrongLoginException, WrongPasswordException {
-        String checkList = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[_])(?=\\S+$).{5,20}";
+        String checkList = "(?=.[0-9a-zA-Z_]+$)(?=\\S+$).{5,20}";
         if (!login.matches(checkList)) {
             throw new WrongLoginException();
         }
@@ -47,13 +47,11 @@ public class Authentication {
     }
 
     private static void parametersOfInput() {
-        System.out.print("(Must consist of letters 'A-Z', letters 'a-z' and a symbol '_'," +
+        System.out.print("(Must consist of letters 'A-Z', letters 'a-z', figures 0-9 and a symbol '_'," +
                 "\n and have 5-20 symbols): ");
     }
 
     private static void parametersConfirmPassword() {
         System.out.print("(Must be the same as the password): ");
     }
-
-
 }
