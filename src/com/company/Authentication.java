@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Authentication {
 
-    public static void inputParameters() throws WrongLoginException, WrongPasswordException {
+    public static boolean inputParameters() throws WrongLoginException, WrongPasswordException {
         System.out.println("\nEnter your Login");
         parametersOfInput();
         Scanner scanner = new Scanner(System.in);
@@ -21,27 +21,29 @@ public class Authentication {
         try {
             inputVerification(login, password, confirmPassword);
         } catch (WrongLoginException e) {
+            e.printStackTrace();
             System.out.println("\nWrong login, login does not match the parameters");
-            e.getStackTrace();
+            return false;
         } catch (WrongPasswordException e2) {
+            e2.printStackTrace();
             System.out.println("\nWrong password, or password Confirmation does not match the parameters" +
                     " or are not identical");
-            e2.getStackTrace();
+            return false;
         }
+        return true;
     }
 
-    public static boolean inputVerification(String login, String password, String confirmPassword) throws WrongLoginException, WrongPasswordException {
+    public static void inputVerification(String login, String password, String confirmPassword) throws WrongLoginException, WrongPasswordException {
         String checkList = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[_])(?=\\S+$).{5,20}";
-        if (login.matches(checkList) && password.matches(checkList) && confirmPassword.equals(password)) {
-            return true;
-        } else if (!login.matches(checkList)) {
+        if (!login.matches(checkList)) {
             throw new WrongLoginException();
-        } else if (!password.matches(checkList)) {
-            throw new WrongPasswordException();
-        } else if (!confirmPassword.equals(password)) {
+        }
+        if (!password.matches(checkList)) {
             throw new WrongPasswordException();
         }
-        return false;
+        if (!confirmPassword.equals(password)) {
+            throw new WrongPasswordException();
+        }
     }
 
     private static void parametersOfInput() {
