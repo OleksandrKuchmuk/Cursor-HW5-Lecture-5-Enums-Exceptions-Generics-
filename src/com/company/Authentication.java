@@ -34,7 +34,7 @@ public class Authentication {
     }
 
     public static void inputVerification(String login, String password, String confirmPassword) throws WrongLoginException, WrongPasswordException {
-        String checkList = "(?=.[0-9a-zA-Z_]+$)(?=\\S+$).{5,20}";
+        String checkList = "(?=.[0-9a-zA-Z_]+$)(?=\\S+$).{0,20}";
         if (!login.matches(checkList)) {
             throw new WrongLoginException();
         }
